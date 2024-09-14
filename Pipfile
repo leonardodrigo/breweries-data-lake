@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyspark = "*"
+apache-airflow = "*"
+apache-airflow-providers-http = "*"
+azure-storage-blob = "*"
+azure-identity = "*"
+azure-keyvault-secrets = "*"
+python-dotenv = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
