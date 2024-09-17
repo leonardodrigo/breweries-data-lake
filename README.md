@@ -31,6 +31,7 @@ Here is an example of the data returned by the `/breweries` endpoint:
     "state": "Wisconsin",
     "street": "8100 Washington Ave"
 }
+```
 
 ## Getting Started
 
