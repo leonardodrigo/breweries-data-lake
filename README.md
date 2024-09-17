@@ -4,15 +4,22 @@ The primary objective of this project was to develop a data pipeline that ingest
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
 The things you need before installing the project.
 
-* Git
-* Docker and Docker Compose
-* Azure Cloud Account
+* **Git**
+  [Documentation] (https://git-scm.com/doc)
+* **Docker Desktop**  
+  (Includes Docker Compose and Docker Engine)  
+  [Installation Guide](https://docs.docker.com/desktop/install/mac-install/)
+* **Docker Engine**  
+  (Only needed if Docker Desktop is not installed)  
+  [Installation Guide](https://docs.docker.com/engine/install/)
+* **Azure Cloud Account**  
+  [Create an Account](https://azure.microsoft.com/en-us)
 
 ### Installation
 
@@ -42,38 +49,3 @@ Initialize all Airflow and Spark containers and define the number of Spark worke
 ```
 $ docker compose up --scale spark-worker=3 -d
 ```
-
-
-## Usage
-
-A few examples of useful commands and/or tasks.
-
-```
-$ First example
-$ Second example
-$ And keep this in mind
-```
-
-## Deployment
-
-Additional notes on how to deploy this on a live or release system. Explaining the most important branches, what pipelines they trigger and how to update the database (if anything special).
-
-### Server
-
-* Live:
-* Release:
-* Development:
-
-### Branches
-
-* Master:
-* Feature:
-* Bugfix:
-* etc...
-
-## Additional Documentation and Acknowledgments
-
-* Project folder on server:
-* Confluence link:
-* Asana board:
-* etc...
