@@ -9,6 +9,9 @@ AZURE_TOKEN = os.environ["AZURE_TOKEN"]
 storage_url = f"https://{AZURE_STORAGE_ACCOUNT}.blob.core.windows.net"
 
 def upload_file_to_blob_storage(file_name, data, container_name):
+    '''
+        Uploads a JSON file to Azure Blob Storage.
+    '''
     blob_service_client = BlobServiceClient(account_url=storage_url, credential=AZURE_TOKEN)
     container_client = blob_service_client.get_container_client(container_name)
     
@@ -27,3 +30,4 @@ def upload_file_to_blob_storage(file_name, data, container_name):
         print(f"File {file_name} uploaded to {container_name}")
     except Exception as e:
         print(f"Error uploading file {file_name}: {e}")
+

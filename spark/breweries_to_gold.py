@@ -87,6 +87,7 @@ else:
     .execute()
 
 # Now that we have the gold data available, we will run OPTIMIZE and Z-ORDER as well
-spark.sql(f"OPTIMIZE delta.`{gold_path}` ZORDER BY (brewery_type, country)")
+#spark.sql(f"OPTIMIZE delta.`{gold_path}` ZORDER BY (brewery_type, country)")
 
 spark.stop()
+

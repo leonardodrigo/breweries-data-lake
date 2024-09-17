@@ -1,7 +1,7 @@
 import pyspark
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, coalesce, current_timestamp
+from pyspark.sql.functions import col, coalesce, current_timestamp, lit
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
 from delta.tables import DeltaTable
 from delta import configure_spark_with_delta_pip
@@ -91,7 +91,7 @@ df_transformed = df.select(
     col("city"),
     col("state"),
     col("postal_code"),
-    col("country"),
+    coalesce(col("country"), lit("Unknown")).alias("country"),
     col("longitude"),
     col("latitude"),
     col("phone"),
@@ -130,6 +130,5 @@ else:
 # reducing the number of small files and improving metadata efficiency. 
 # Following that, we will apply **Z-ORDER** to organize the data by frequently queried columns, 
 # which will enhance read performance when accessing the gold layer.
-spark.sql(f"OPTIMIZE delta.`{silver_path}` ZORDER BY (brewery_type)")
+#spark.sql(f"OPTIMIZE delta.`{silver_path}` ZORDER BY (brewery_type)")
 
-spark.stop()

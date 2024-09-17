@@ -25,8 +25,6 @@ spark_config = {
 default_args = {
     "owner": "Leonardo Drigo",
     "depends_on_past": False,
-    "email": EMAIL,
-    "email_on_failure": True,
     "retries": 3,
     "retry_delay": timedelta(minutes=5),
     "start_date": datetime(2024, 1, 1),
@@ -88,3 +86,4 @@ end = DummyOperator(
 
 
 check_api_availability >> extract_raw_data_from_api >> breweries_to_silver >> breweries_to_gold >> end
+
