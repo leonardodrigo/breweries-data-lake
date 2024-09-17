@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 The things you need before installing the project.
 
 * **Git**
-  [Documentation] (https://git-scm.com/doc)
+  [Documentation](https://git-scm.com/doc)
 * **Docker Desktop**  
   (Includes Docker Compose and Docker Engine)  
   [Installation Guide](https://docs.docker.com/desktop/install/mac-install/)
