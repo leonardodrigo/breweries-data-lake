@@ -47,9 +47,3 @@ def extract_raw_data(container_name, max_per_page=200):
                 print(f"File {file_name} uploaded to {container_name}")
             else:
                 print(f"Failed to pull data from page {page}")
-
-
-
-
-
-
