@@ -82,22 +82,22 @@ For storing the data for this project, we chose Azure to create a cloud-based da
 
 ### Installation
 
-With prerequisites and Azure resources already installed and setup, clone this repository in your machine.
+With prerequisites and Azure resources already installed and set up, follow these steps to clone and configure the repository on your machine.
 ```
 $ git clone https://github.com/leonardodrigo/breweries-data-lake.git
 ```
 
-Enter in the project directory.
+Navigate to project directory.
 ```
 $ cd /breweries-data-lake
 ```
 
-Now, pull the docker images defined in ```docker-compose.yaml``` and build the containers. In the first time, it may take a few minutes to complete.
+Now, pull the docker images defined in ```docker-compose.yaml``` and build the containers. This process may take a few minutes on the first run.
 ```
 $ docker compose build
 ```
 
-Initialize all Airflow and Spark containers and define the number of Spark workers we want in the cluster. The command below initializes 3 workers with 1GB of memory and 1 CPU core, but fell free to set up more or less workers according to your machine resources. It is possible to change worker configuration as well.
+Start the Airflow and Spark containers and configure the number of Spark workers for the cluster. The command below initializes 3 Spark workers, each with 1GB of memory and 1 CPU core. You can adjust the number of workers and their configuration based on your machine's resources.
 ```
 $ docker compose up --scale spark-worker=3 -d
 ```
@@ -127,6 +127,4 @@ $ docker compose up --scale spark-worker=3 -d
    - Set **"Spark Binary"** to `spark-submit`.
    - Set the **"Connection Id"** to `spark_default`.
    - Click **"Save"** to store the connection.
-
-
 
