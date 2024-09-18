@@ -64,7 +64,7 @@ df = spark.read \
 """
     Many breweries lack values for address_2 and address_3. To simplify our curated data,
     we will use the coalesce function to select the most relevant address and consolidate
-    it into a single address column in the final DataFrame. Additionally, we apply the `trim`
+    it into a single address column in the final DataFrame. Additionally, we apply the trim
     function to remove any leading or trailing spaces from the address fields, especially 
     in the country column, to prevent creating multiple partitions for the same country
     due to extra spaces. Finally, an updated_at column will be added to capture the processing timestamp. 
