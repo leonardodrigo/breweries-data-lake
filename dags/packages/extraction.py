@@ -19,7 +19,7 @@ def number_of_breweries():
         print(f"Error getting number of breweries: {e}")
         return None
 
-def extract_raw_data(container_name, max_per_page=200):
+def extract_raw_data(container_name, max_per_page=50):
     '''
         Data extraction from all the available breweries.
         The default number of pages is 50 but we are going to use the maximum available (200) to optimize the number of requests.

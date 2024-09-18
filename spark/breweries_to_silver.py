@@ -1,5 +1,3 @@
-import pyspark
-from pyspark import SparkConf
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, coalesce, current_timestamp, lit, trim
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
@@ -12,7 +10,7 @@ import os
     - BREWERIES TO SILVER
     In this notebook, we'll process Open Breweries DB data in JSON format from the bronze zone in our Azure Data Lake. 
     With our Spark cluster set up, the master node will handle job initialization. 
-    The goal of this step is to transform the raw data into Delta format and write it to the silver layer.
+    The goal of this step is to transform the raw data into delta format and write it to the silver layer.
 
     You can monitor the Spark UI at http://localhost:8081. 
 """
@@ -28,7 +26,7 @@ builder = SparkSession.builder \
 spark = configure_spark_with_delta_pip(builder) \
             .getOrCreate()
 
-# Containers name
+# Container names
 BRONZE_CONTAINER="bronze"
 SILVER_CONTAINER="silver"
 
@@ -63,9 +61,15 @@ df = spark.read \
         .load(bronze_path) \
         .distinct()
 
-# Many breweries lack values for address_2 and address_3, so to simplify our curated data, 
-# we will use coalesce to select the most relevant address and consolidate it into a single address column in the final dataframe.
-# In addition to that, updated_at column will be added in the end of dataframe to hold the processing timestamp.
+"""
+    Many breweries lack values for address_2 and address_3. To simplify our curated data,
+    we will use the coalesce function to select the most relevant address and consolidate
+    it into a single address column in the final DataFrame. Additionally, we apply the `trim`
+    function to remove any leading or trailing spaces from the address fields, especially 
+    in the country column, to prevent creating multiple partitions for the same country
+    due to extra spaces. Finally, an updated_at column will be added to capture the processing timestamp. 
+"""
+
 df_transformed = df.select(
     trim(col("id")).alias("id"),
     trim(col("name")).alias("name"),
@@ -81,12 +85,14 @@ df_transformed = df.select(
     trim(col("website_url")).alias("website_url")
 ).withColumn("updated_at", current_timestamp())
 
-# We are removing the tate_province and street columns too because the data they contain is redundant. 
-# The state_province information is already included in the state column, 
-# and the street column's details are duplicated in the newly created address column, 
-# which consolidates all relevant address information.
+"""
+    We are also removing the state_province and street columns because the data they contain is redundant. 
+    The state_province information is already included in the state column, 
+    and the details in the street column are duplicated in the newly created address column, 
+    which consolidates all relevant address information.
+"""
 
-# Let's check if delta table exists in silver container. If not, create it.
+# Check if the delta table exists in the silver container. If it doesn't, create it.
 is_delta = DeltaTable.isDeltaTable(spark, silver_path)
 if not is_delta:
     print(f"No delta found in {silver_path}. Writing full table...")
@@ -109,10 +115,13 @@ else:
     .whenMatchedUpdateAll() \
     .execute()
 
-# Now that we have the silver data available, we will run **OPTIMIZE** to compact the delta files, 
-# reducing the number of small files and improving metadata efficiency. 
-# Following that, we will apply **Z-ORDER** to organize the data by frequently queried columns, 
-# which will enhance read performance when accessing the gold layer.
+"""
+    Now that we have the silver data available, I initially planned to run OPTIMIZE to compact the delta files,
+    reducing the number of small files and improving metadata efficiency. However, after benchmarking the pipeline performance,
+    I found that it wasn't worthwhile, as we are dealing with a small amount of data. Therefore, OPTIMIZE does not significantly 
+    enhance read performance for the gold layer. Following this, we will still apply Z-ORDER to organize the data by frequently queried 
+    columns, which will improve read performance when accessing the gold layer.
+"""
 
 #spark.sql(f"OPTIMIZE delta.`{silver_path}` ZORDER BY (brewery_type)")
 

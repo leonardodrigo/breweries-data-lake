@@ -16,9 +16,7 @@ spark_config = {
     "spark.jars.packages": "io.delta:delta-spark_2.12:3.2.0,org.apache.hadoop:hadoop-azure:3.3.4,com.microsoft.azure:azure-storage:8.6.6",
     "spark.hadoop.fs.azure.account.key." + AZURE_STORAGE_ACCOUNT + ".blob.core.windows.net": AZURE_TOKEN,
     "spark.sql.extensions": "io.delta.sql.DeltaSparkSessionExtension",
-    "spark.sql.catalog.spark_catalog": "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-    "spark.sql.repl.eagerEval.enabled": "true",
-    "spark.sql.repl.eagerEval.maxNumRows": "10"
+    "spark.sql.catalog.spark_catalog": "org.apache.spark.sql.delta.catalog.DeltaCatalog"
 }
 
 default_args = {

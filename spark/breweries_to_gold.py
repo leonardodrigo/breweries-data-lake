@@ -1,6 +1,4 @@
 
-import pyspark
-from pyspark import SparkConf
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, count
 from delta.tables import DeltaTable
@@ -10,9 +8,9 @@ import os
 
 """
     - BREWERIES TO GOLD
-    In this notebook, we'll process Open Breweries DB data in Delta format from the silver zone in our Azure Data Lake. 
+    In this notebook, we'll process Open Breweries DB data in delta format from the silver zone in our Azure Data Lake. 
     With our Spark cluster set up, the master node will handle job initialization. 
-    The goal of this step is to aggregate the curated data into Delta format and write it to the Gold layer.
+    The goal of this step is to aggregate the curated data into delta format and write it to the Gold layer.
 
     You can monitor the Spark UI at http://localhost:8081. 
 """
@@ -28,7 +26,7 @@ builder = SparkSession.builder \
 spark = configure_spark_with_delta_pip(builder) \
             .getOrCreate()
 
-# Containers name
+# Container names
 SILVER_CONTAINER="silver"
 GOLD_CONTAINER="gold"
 
