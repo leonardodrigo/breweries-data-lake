@@ -2,7 +2,7 @@
 
 The primary objective of this project was to develop a data pipeline that ingests brewery-related data from the [Open Brewery DB API](https://www.openbrewerydb.org/), processes it, and stores it in various layers of a datalake using Medallion Architecture. This was achieved with a stack of technologies including Airflow for orchestrating workflows, Spark for processing data, Docker and Docker Compose for containerization and orchestration, and Azure for cloud storage.
 
-![](https://github.com/leonardodrigo/breweries-data-lake/blob/main/docs/img/project_diagram.png)
+![](https://github.com/leonardodrigo/breweries-data-lake/blob/main/docs/img/project-diagram.png)
 
 ## About the Data
 
