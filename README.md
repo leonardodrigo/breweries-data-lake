@@ -68,7 +68,7 @@ For storing the data for this project, we chose Azure to create a cloud-based da
    - Click **"Review + create"** and then **"Create"** to provision the storage account.
 
 2. **Configure Azure Data Lake Storage:**
-   - Once the storage account is created, navigate to it in the Azure Portal.
+   - Once the storage account is created and deployed, navigate to it in the Azure Portal.
    - Go to the **"Containers"** section and click **"Add container"** to create three new containers for your datalake: **bronze**, **silver**, and **gold** (ensure these names are used).
 
 3. **Set Up Access Controls:**
