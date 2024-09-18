@@ -85,7 +85,7 @@ $ git clone https://github.com/leonardodrigo/breweries-data-lake.git
 
 Navigate to project directory.
 ```
-$ cd /breweries-data-lake
+$ cd breweries-data-lake
 ```
 **Configure Environment Variables:**
    - Locate the `env.template` file in the root directory of the project.
