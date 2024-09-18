@@ -130,7 +130,12 @@ $ docker compose up --scale spark-worker=3 -d
 
 ## Running DAG in Airflow
 
-To run the DAG **brewery-pipeline** that is currently turned off in Airflow, locate it on the home page. Toggle the switch in the **"Enabled"** column to turn the DAG on, which will allow it to start immediately and run automatically on a daily schedule.
+To run the DAG **brewery-pipeline** that is currently turned off in Airflow, locate it on the home page. Toggle the switch in the **"Enabled"** column to turn the DAG on, which will allow it to start immediately and run automatically on a daily schedule. The first time spark jobs are executed, they may take a few minutes to complete because some dependencies and JAR files need to be installed in the cluster before executing the data processing.
+
+### Observation
+
+In my experience, executing these containers on a Mac with Apple Silicon chips can be relatively slow. This is primarily due to the architectural differences between ARM-based processors and x86 architecture, which can lead to compatibility issues and performance overhead when running Docker containers. To enhance performance, consider deploying this project in a virtual machine (VM) or on a cloud-based platform where x86 architecture is natively supported. Alternatively, you can follow these [Docker instructions](https://docs.docker.com/desktop/install/mac-install/) to set up Rosetta.
+
 
 ## Next Steps: Monitoring and Alerting Process
 
