@@ -73,7 +73,12 @@ For storing the data for this project, we chose Azure to create a cloud-based da
 
 3. **Set Up Access Controls:**
    - Configure access permissions for your storage account and containers using **"Access control (IAM)"**. Assign a role such as **"Storage Account Contributor"** to your user.
-   - _Go to **Security + networking** and then **Access keys**. key1 or key2 will br used to access the storage account via Airflow as well._
+   - _Go to **Security + networking** and then **Access keys**. key1 or key2 will be used to access the storage account via Airflow as well._
+
+4. **Configure Environment Variables:**
+   - Locate the `env.template` file in the root directory of the project.
+   - Rename the file to `.env`.
+   - Open the `.env` file and set your Azure storage account name and key (key1 or key2).
 
 ### Installation
 
@@ -96,3 +101,32 @@ Initialize all Airflow and Spark containers and define the number of Spark worke
 ```
 $ docker compose up --scale spark-worker=3 -d
 ```
+
+### Airflow Connections
+
+1. **Access Airflow Webserver:**
+   - Open your web browser and navigate to [http://localhost:8080](http://localhost:8080) (It may take a few seconds after starting the containers).
+   - Log in using the default username `airflow` and password `airflow`.
+
+2. **Set Up Airflow Connections:**
+   - Click on **"Admin"** in the top menu, then select **"Connections"**.
+   - Click the **"+"** button to add a new connection.
+
+   **a. Open Brewery API Connection:**
+   - Choose **"Connection Type"** as **"HTTP"**.
+   - Set the **"Host"** to `https://api.openbrewerydb.org/v1`.
+   - Set the **"Connection Id"** to `open_brewery_db_api`.
+   - Click **"Save"** to store the connection.
+
+   **b. Spark Connection:**
+   - Click the **"+"** button to add another connection.
+   - Choose **"Connection Type"** as **"Spark"**.
+   - Set the **"Host"** to `spark://spark`.
+   - Set the **"Port"** to `7077`.
+   - Set **"Deploy Mode"** to **"client"**.
+   - Set **"Spark Binary"** to `spark-submit`.
+   - Set the **"Connection Id"** to `spark_default`.
+   - Click **"Save"** to store the connection.
+
+
+

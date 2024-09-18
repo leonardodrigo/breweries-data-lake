@@ -10,7 +10,6 @@ import os
 
 AZURE_STORAGE_ACCOUNT = os.environ["AZURE_STORAGE_ACCOUNT"]
 AZURE_TOKEN = os.environ["AZURE_TOKEN"]
-EMAIL = os.environ["EMAIL"]
 
 spark_config = {
     "spark.master": "spark://spark:7077",
