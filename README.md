@@ -131,3 +131,29 @@ $ docker compose up --scale spark-worker=3 -d
 ## Running DAG in Airflow
 
 To run the DAG **brewery-pipeline** that is currently turned off in Airflow, locate it on the home page. Toggle the switch in the **"Enabled"** column to turn the DAG on, which will allow it to start immediately and run automatically on a daily schedule.
+
+# Next Steps
+
+## Monitoring and Alerting Process
+
+To ensure the reliability and efficiency of the Open Brewery Datalake pipeline, a monitoring and alerting process is essential. This will help identify data quality issues, pipeline failures, and other potential problems.
+
+### 1. Data Quality Monitoring
+
+We will implement a dedicated DAG called `brewery-quality`, which will depend on the main pipeline. This DAG will:
+- **Run Spark Jobs**: Submit a Spark job that includes several functions, each responsible for checking specific validation rules related to data completeness, consistency, accuracy, and integrity.
+- **Logging**: Log validation results to a designated system (e.g., Azure Blob Storage) for historical tracking and analysis.
+
+### 2. Pipeline Failure Monitoring
+
+Utilize Airflow’s built-in features to monitor DAG execution:
+- **Alerts on Failure**: Configure the `EmailOperator` to send alerts for task failures, retries, or timeouts.
+- **Retries**: Set retry policies for tasks to allow for automatic re-execution in case of intermittent failures.
+
+### 3. Notification System
+
+Implement a notification system to keep stakeholders informed:
+- **Email Notifications**: Use the `EmailOperator` for immediate alerts on validation failures and pipeline issues.
+- **Slack Notifications**: Integrate Slack via webhooks for real-time alerts, enabling quick responses from the team.
+
+By adopting this streamlined monitoring and alerting process, we can improve reliability and integrity, providing stakeholders with trustworthy data.
