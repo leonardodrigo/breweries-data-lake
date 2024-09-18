@@ -1,7 +1,7 @@
 import pyspark
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, coalesce, current_timestamp, lit
+from pyspark.sql.functions import col, coalesce, current_timestamp, lit, trim
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
 from delta.tables import DeltaTable
 from delta import configure_spark_with_delta_pip
@@ -21,31 +21,14 @@ import os
 AZURE_STORAGE_ACCOUNT = os.environ["AZURE_STORAGE_ACCOUNT"]
 AZURE_TOKEN = os.environ["AZURE_TOKEN"]
 
-print(AZURE_STORAGE_ACCOUNT)
-print(AZURE_TOKEN)
-
-# Since our Spark Cluster needs to access Azure, we must include some jar files in configuration
-# - spark.sql.repl.eagerEval.enabled**: Enable eager evaluation for notebooks
-# - park.sql.repl.eagerEval.maxNumRows**: Default number of rows
-
-conf = SparkConf() \
-            .set("spark.jars.packages", "io.delta:delta-spark_2.12:3.2.0,org.apache.hadoop:hadoop-azure:3.3.4,com.microsoft.azure:azure-storage:8.6.6") \
-            .set("spark.hadoop.fs.azure.account.key." + AZURE_STORAGE_ACCOUNT + ".blob.core.windows.net", f"{AZURE_TOKEN}") \
-            .set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-            .set("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-            .set("spark.sql.repl.eagerEval.enabled", True) \
-            .set("spark.sql.repl.eagerEval.maxNumRows", 10)
-
 builder = SparkSession.builder \
             .master("spark://spark:7077") \
-            .appName("Open Brewery DB raw data processing") \
-            .config(conf=conf)
+            .appName("Open Brewery DB raw data processing")
 
 spark = configure_spark_with_delta_pip(builder) \
-            .config(conf=conf) \
             .getOrCreate()
 
- # Containers name
+# Containers name
 BRONZE_CONTAINER="bronze"
 SILVER_CONTAINER="silver"
 
@@ -84,18 +67,18 @@ df = spark.read \
 # we will use coalesce to select the most relevant address and consolidate it into a single address column in the final dataframe.
 # In addition to that, updated_at column will be added in the end of dataframe to hold the processing timestamp.
 df_transformed = df.select(
-    col("id"),
-    col("name"),
-    col("brewery_type"),
-    coalesce(col("address_1"), col("address_2"), col("address_3")).alias("address"),
-    col("city"),
-    col("state"),
-    col("postal_code"),
-    coalesce(col("country"), lit("Unknown")).alias("country"),
+    trim(col("id")).alias("id"),
+    trim(col("name")).alias("name"),
+    trim(col("brewery_type")).alias("brewery_type"),
+    coalesce(trim(col("address_1")), trim(col("address_2")), trim(col("address_3"))).alias("address"),
+    trim(col("city")).alias("city"),
+    trim(col("state")).alias("state"),
+    trim(col("postal_code")).alias("postal_code"),
+    coalesce(trim(col("country")), lit("Unknown")).alias("country"),
     col("longitude"),
     col("latitude"),
-    col("phone"),
-    col("website_url")
+    trim(col("phone")).alias("phone"),
+    trim(col("website_url")).alias("website_url")
 ).withColumn("updated_at", current_timestamp())
 
 # We are removing the tate_province and street columns too because the data they contain is redundant. 
@@ -130,5 +113,6 @@ else:
 # reducing the number of small files and improving metadata efficiency. 
 # Following that, we will apply **Z-ORDER** to organize the data by frequently queried columns, 
 # which will enhance read performance when accessing the gold layer.
+
 #spark.sql(f"OPTIMIZE delta.`{silver_path}` ZORDER BY (brewery_type)")
 

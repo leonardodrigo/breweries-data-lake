@@ -21,28 +21,14 @@ import os
 AZURE_STORAGE_ACCOUNT = os.environ["AZURE_STORAGE_ACCOUNT"]
 AZURE_TOKEN = os.environ["AZURE_TOKEN"]
 
-# Since our Spark Cluster needs to access Azure, we must include some jar files in configuration
-# - spark.sql.repl.eagerEval.enabled**: Enable eager evaluation for notebooks
-# - park.sql.repl.eagerEval.maxNumRows**: Default number of rows
-
-conf = SparkConf() \
-            .set("spark.jars.packages", "io.delta:delta-spark_2.12:3.2.0,org.apache.hadoop:hadoop-azure:3.3.4,com.microsoft.azure:azure-storage:8.6.6") \
-            .set("spark.hadoop.fs.azure.account.key." + AZURE_STORAGE_ACCOUNT + ".blob.core.windows.net", f"{AZURE_TOKEN}") \
-            .set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-            .set("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-            .set("spark.sql.repl.eagerEval.enabled", True) \
-            .set("spark.sql.repl.eagerEval.maxNumRows", 10)
-
 builder = SparkSession.builder \
             .master("spark://spark:7077") \
-            .appName("Open Brewery DB Silver data aggregation") \
-            .config(conf=conf)
+            .appName("Open Brewery DB Silver data aggregation")
 
 spark = configure_spark_with_delta_pip(builder) \
-            .config(conf=conf) \
             .getOrCreate()
 
- # Containers name
+# Containers name
 SILVER_CONTAINER="silver"
 GOLD_CONTAINER="gold"
 
@@ -87,6 +73,7 @@ else:
     .execute()
 
 # Now that we have the gold data available, we will run OPTIMIZE and Z-ORDER as well
+
 #spark.sql(f"OPTIMIZE delta.`{gold_path}` ZORDER BY (brewery_type, country)")
 
 spark.stop()

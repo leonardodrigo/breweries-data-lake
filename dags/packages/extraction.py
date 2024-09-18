@@ -14,7 +14,7 @@ def number_of_breweries():
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
-        return int(data['total'])
+        return int(data["total"])
     except requests.exceptions.RequestException as e:
         print(f"Error getting number of breweries: {e}")
         return None

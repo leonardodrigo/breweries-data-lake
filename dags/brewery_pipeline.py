@@ -32,9 +32,9 @@ default_args = {
 }
 
 dag = DAG(
-    'brewery-pipeline',
+    "brewery-pipeline",
     default_args=default_args,
-    schedule_interval='@daily',
+    schedule_interval="@daily",
     catchup=False
 )
 
@@ -59,27 +59,27 @@ extract_raw_data_from_api = PythonOperator(
 )
 
 breweries_to_silver = SparkSubmitOperator(
-    task_id='breweries_to_silver',
-    conn_id='spark_default',
-    application='/opt/airflow/spark/breweries_to_silver.py',
-    name='breweries_to_silver',
+    task_id="breweries_to_silver",
+    conn_id="spark_default",
+    application="/opt/airflow/spark/breweries_to_silver.py",
+    name="breweries_to_silver",
     verbose=True,
     conf=spark_config,
     dag=dag,
 )
 
 breweries_to_gold = SparkSubmitOperator(
-    task_id='breweries_to_gold',
-    conn_id='spark_default',
-    application='/opt/airflow/spark/breweries_to_gold.py',
-    name='breweries_to_gold',
+    task_id="breweries_to_gold",
+    conn_id="spark_default",
+    application="/opt/airflow/spark/breweries_to_gold.py",
+    name="breweries_to_gold",
     verbose=True,
     conf=spark_config,
     dag=dag,
 )
                   
 end = DummyOperator(
-    task_id='end',
+    task_id="end",
     dag=dag,
 )
 
