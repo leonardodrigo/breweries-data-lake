@@ -20,7 +20,6 @@ AZURE_STORAGE_ACCOUNT = os.environ["AZURE_STORAGE_ACCOUNT"]
 AZURE_TOKEN = os.environ["AZURE_TOKEN"]
 
 builder = SparkSession.builder \
-            .master("spark://spark:7077") \
             .appName("Open Brewery DB Silver data aggregation")
 
 spark = configure_spark_with_delta_pip(builder) \
