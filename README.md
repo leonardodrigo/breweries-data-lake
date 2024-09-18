@@ -75,10 +75,6 @@ For storing the data for this project, we chose Azure to create a cloud-based da
    - Configure access permissions for your storage account and containers using **"Access control (IAM)"**. Assign a role such as **"Storage Account Contributor"** to your user.
    - _Go to **Security + networking** and then **Access keys**. key1 or key2 will be used to access the storage account via Airflow as well._
 
-4. **Configure Environment Variables:**
-   - Locate the `env.template` file in the root directory of the project.
-   - Rename the file to `.env`.
-   - Open the `.env` file and set your Azure storage account name and key (key1 or key2).
 
 ### Installation
 
@@ -91,6 +87,10 @@ Navigate to project directory.
 ```
 $ cd /breweries-data-lake
 ```
+**Configure Environment Variables:**
+   - Locate the `env.template` file in the root directory of the project.
+   - Rename the file to `.env`.
+   - Open the `.env` file and set your Azure storage account name and key (key1 or key2).
 
 Now, pull the docker images defined in ```docker-compose.yaml``` and build the containers. This process may take a few minutes on the first run.
 ```
