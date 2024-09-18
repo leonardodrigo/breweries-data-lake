@@ -38,7 +38,7 @@ def extract_raw_data(container_name, max_per_page=200):
                 data = response.json()
                 if data:
                     file_name = f"breweries_page_{page}.json"
-                    upload_file_to_blob_storage(file_name, json.dumps(data), container_name)
+                    upload_file_to_blob_storage(file_name, data, container_name)
                 else:
                     print(f"No data found on page {page}")
             except requests.exceptions.RequestException as e:
