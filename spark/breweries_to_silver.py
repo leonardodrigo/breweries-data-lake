@@ -10,7 +10,7 @@ import os
     - BREWERIES TO SILVER
     In this notebook, we'll process Open Breweries DB data in JSON format from the bronze zone in our Azure Data Lake. 
     With our Spark cluster set up, the master node will handle job initialization. 
-    The goal of this step is to transform the raw data into delta format and write it to the silver layer.
+    The goal of this step is to transform the raw data into delta format and write it to the silver layer, partitioned by country.
 
     You can monitor the Spark UI at http://localhost:8081. 
 """
