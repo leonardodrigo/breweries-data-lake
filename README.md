@@ -128,6 +128,6 @@ $ docker compose up --scale spark-worker=3 -d
    - Set the **"Connection Id"** to `spark_default`.
    - Click **"Save"** to store the connection.
 
-## Running a DAG in Airflow
+## Running DAG in Airflow
 
 To run the DAG **brewery-pipeline** that is currently turned off in Airflow, locate it on the home page. Toggle the switch in the **"Enabled"** column to turn the DAG on, which will allow it to start immediately and run automatically on a daily schedule.
