@@ -60,7 +60,7 @@ For storing the data for this project, we chose Azure to create a cloud-based da
    - Sign in to the [Azure Portal](https://portal.azure.com).
    - Navigate to **"Storage accounts"** and click **"Create"**.
    - Choose the appropriate subscription and resource group. If you don't have a resource group, you can create a new one at this step.
-   - \_Provide a unique name for the storage account; this will be used to connect via Airflow.\_
+   - _Provide a unique name for the storage account; this will be used to connect via Airflow._
    - Select the **"Region"** where you want your data to be stored.
    - Choose **"Standard"** for **"Performance"** type.
    - Click **Next** and enable **anonymous access on individual containers** and **hierarchical namespace**.
@@ -73,7 +73,7 @@ For storing the data for this project, we chose Azure to create a cloud-based da
 
 3. **Set Up Access Controls:**
    - Configure access permissions for your storage account and containers using **"Access control (IAM)"**. Assign a role such as **"Storage Account Contributor"** to your user.
-   - \_Go to **Security + networking** and then **Access keys**. key1 or key2 will br used to access the storage account via Airflow as well.\_
+   - _Go to **Security + networking** and then **Access keys**. key1 or key2 will br used to access the storage account via Airflow as well._
 
 ### Installation
 
